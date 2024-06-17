@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const { GitHub } = require('@actions/github');
 const fs = require('fs');
-import {findFilesToUpload} from '../shared/search'
+import {findFilesToUpload} from 'shared/search';
 
 async function run() {
   try {
@@ -14,12 +14,12 @@ async function run() {
     const assetName = core.getInput('asset_name', { required: false });
     const assetContentType = core.getInput('asset_content_type', { required: true });
 
-    const searchResult = await findFilesToUpload(filePath)
+    const searchResult = await findFilesToUpload(filePath);
 
     if (searchResult.filesToUpload.length === 0) {
       core.setFailed("No files found with this pattern");
     } else {
-      const s = searchResult.filesToUpload.length === 1 ? '' : 's'
+      const s = searchResult.filesToUpload.length === 1 ? '' : 's';
       core.info(
         `With the provided path, there will be ${searchResult.filesToUpload.length} file${s} uploaded`
       )
@@ -33,9 +33,9 @@ async function run() {
       // API Documentation: https://developer.github.com/v3/repos/releases/#upload-a-release-asset
       // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-upload-release-asset
       for (var i = 0; i < searchResult.filesToUpload.length; i++) {
-        const assetPathLocal = searchResult.filesToUpload[i]
-        const assetNameLocal = assetPathLocal.replace(/^.*[\\/]/, '')
-        core.info(`Uploading ${assetPathLocal} wit file name ${assetNameLocal}`)
+        const assetPathLocal = searchResult.filesToUpload[i];
+        const assetNameLocal = assetPathLocal.replace(/^.*[\\/]/, '');
+        core.info(`Uploading ${assetPathLocal} wit file name ${assetNameLocal}`);
 
         const uploadAssetResponse = await github.repos.uploadReleaseAsset({
           url: uploadUrl,
