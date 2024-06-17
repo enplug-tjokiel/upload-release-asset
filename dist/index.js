@@ -4125,7 +4125,7 @@ async function run() {
     // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
     const uploadUrl = core.getInput('upload_url', { required: true });
     const assetPath = core.getInput('asset_path', { required: true });
-    const assetName = core.getInput('asset_name', { required: true });
+    const assetName = core.getInput('asset_name', { required: false });
     const assetContentType = core.getInput('asset_content_type', { required: true });
 
     // Determine content-length for header to upload asset
